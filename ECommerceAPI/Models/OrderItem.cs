@@ -1,12 +1,20 @@
-namespace ECommerceAPI.Models
+using System.ComponentModel.DataAnnotations;
+
+public class OrderItem
 {
-    public class OrderItem
-    {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
-        public int Quantity { get; set; }
-    }
+    public int Id { get; set; }
+
+    [Required]
+    public int OrderId { get; set; } // Klucz obcy do zamówienia
+
+    [Required]
+    public int ProductId { get; set; } // Klucz obcy do produktu
+
+    [Required]
+    public int Quantity { get; set; }
+
+    [Required]
+    public decimal UnitPrice { get; set; }
+
+    public Product Product { get; set; } // Łączenie do encji Product
 }
