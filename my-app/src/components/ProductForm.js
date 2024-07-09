@@ -1,64 +1,62 @@
 import React, { useState } from 'react';
-import { createProduct } from '../api';
 
-function ProductForm() {
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [priceNet, setPriceNet] = useState('');
-    const [priceGross, setPriceGross] = useState('');
-    const [storeId, setStoreId] = useState('');
+const ProductForm = () => {
+    const [productName, setProductName] = useState('');
+    const [productPrice, setProductPrice] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await createProduct({ name, description, priceNet, priceGross, storeId });
-        setName('');
-        setDescription('');
-        setPriceNet('');
-        setPriceGross('');
-        setStoreId('');
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const productData = {
+            name: productName,
+            price: productPrice,
+        };
+
+        try {
+            const response = await fetch('http://localhost:8000/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(productData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Zresetowanie formularza po dodaniu produktu
+            setProductName('');
+            setProductPrice('');
+        } catch (error) {
+            console.error('Fetch Error:', error);
+        }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Dodaj Produkt</h3>
-            <input
-                type="text"
-                placeholder="Nazwa"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                placeholder="Opis"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="Cena Netto"
-                value={priceNet}
-                onChange={(e) => setPriceNet(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="Cena Brutto"
-                value={priceGross}
-                onChange={(e) => setPriceGross(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="ID Sklepu"
-                value={storeId}
-                onChange={(e) => setStoreId(e.target.value)}
-                required
-            />
-            <button type="submit">Dodaj</button>
+            <h2>Dodaj produkt</h2>
+            <div>
+                <label>Nazwa produktu:</label>
+                <input
+                    type="text"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    required
+                />
+            </div>
+            <div>
+                <label>Cena:</label>
+                <input
+                    type="number"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                    required
+                />
+            </div>
+            <button type="submit">Dodaj produkt</button>
         </form>
     );
-}
+};
 
 export default ProductForm;

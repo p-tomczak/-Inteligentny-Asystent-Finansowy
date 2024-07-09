@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { getProducts, deleteProduct } from '../api';
+import React, { useState, useEffect } from 'react';
 
-function ProductList() {
+const ProductList = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await getProducts();
-            setProducts(response.data);
+            try {
+                const response = await fetch('http://localhost:8000/api/products'); // Ustaw odpowiedni URL do swojego backendu
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error('Fetch Error:', error);
+            }
         };
+
         fetchProducts();
     }, []);
 
-    const handleDelete = async (id) => {
-        await deleteProduct(id);
-        setProducts(products.filter(product => product.productId !== id));
-    };
-
     return (
         <div>
-            <h3>Lista Produktów</h3>
+            <h2>Lista produktów</h2>
             <ul>
-                {products.map(product => (
-                    <li key={product.productId}>
-                        {product.name} - {product.description} - Netto: {product.priceNet} - Brutto: {product.priceGross}
-                        <button onClick={() => handleDelete(product.productId)}>Usuń</button>
+                {products.map((product) => (
+                    <li key={product.id}>
+                        {product.name} - {product.price} PLN
                     </li>
                 ))}
             </ul>
         </div>
     );
-}
+};
 
 export default ProductList;

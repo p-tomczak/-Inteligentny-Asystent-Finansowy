@@ -1,70 +1,64 @@
 import React, { useState } from 'react';
-import { createTransaction } from '../api';
+import api from './api';
 
-function TransactionForm() {
-    const [productId, setProductId] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [unitPriceNet, setUnitPriceNet] = useState('');
-    const [unitPriceGross, setUnitPriceGross] = useState('');
-    const [storeId, setStoreId] = useState('');
-    const [type, setType] = useState('Purchase');
+const TransactionForm = () => {
+    const [productName, setProductName] = useState('');
+    const [amount, setAmount] = useState('');
+    const [unitPrice, setUnitPrice] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await createTransaction({ productId, quantity, unitPriceNet, unitPriceGross, storeId, type, date: new Date() });
-        setProductId('');
-        setQuantity('');
-        setUnitPriceNet('');
-        setUnitPriceGross('');
-        setStoreId('');
-        setType('Purchase');
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const transactionData = {
+            productName,
+            amount: parseInt(amount),
+            unitPrice: parseFloat(unitPrice),
+        };
+
+        try {
+            await api.createTransaction(transactionData);
+            // Wstaw tutaj logikę do obsługi sukcesu, np. wyzerowanie pól formularza
+            setProductName('');
+            setAmount('');
+            setUnitPrice('');
+        } catch (error) {
+            console.error('Transaction creation error:', error);
+        }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Dodaj Transakcję</h3>
-            <input
-                type="number"
-                placeholder="ID Produktu"
-                value={productId}
-                onChange={(e) => setProductId(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="Ilość"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="Cena Netto"
-                value={unitPriceNet}
-                onChange={(e) => setUnitPriceNet(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="Cena Brutto"
-                value={unitPriceGross}
-                onChange={(e) => setUnitPriceGross(e.target.value)}
-                required
-            />
-            <input
-                type="number"
-                placeholder="ID Sklepu"
-                value={storeId}
-                onChange={(e) => setStoreId(e.target.value)}
-                required
-            />
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-                <option value="Purchase">Zakup</option>
-                <option value="Return">Zwrot</option>
-            </select>
-            <button type="submit">Dodaj</button>
+            <h2>Dodaj transakcję</h2>
+            <div>
+                <label>Nazwa produktu:</label>
+                <input
+                    type="text"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    required
+                />
+            </div>
+            <div>
+                <label>Ilość:</label>
+                <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    required
+                />
+            </div>
+            <div>
+                <label>Cena jednostkowa:</label>
+                <input
+                    type="number"
+                    value={unitPrice}
+                    onChange={(e) => setUnitPrice(e.target.value)}
+                    required
+                />
+            </div>
+            <button type="submit">Dodaj transakcję</button>
         </form>
     );
-}
+};
 
 export default TransactionForm;

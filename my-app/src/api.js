@@ -1,19 +1,51 @@
-import axios from 'axios';
+const BASE_URL = 'http://localhost:8000/api'; // Ustaw odpowiedni URL do swojego backendu
 
-const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
-});
+const api = {
+    fetchProducts: async () => {
+        const response = await fetch(`${BASE_URL}/products`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    },
+
+    fetchTransactions: async () => {
+        const response = await fetch(`${BASE_URL}/transactions`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    },
+
+    createTransaction: async (transactionData) => {
+        const response = await fetch(`${BASE_URL}/transactions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(transactionData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    },
+
+    createUser: async (userData) => {
+        const response = await fetch(`${BASE_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    },
+};
 
 export default api;
-
-export const getProducts = () => api.get('/Products');
-export const getProduct = (id) => api.get(`/Products/${id}`);
-export const createProduct = (product) => api.post('/Products', product);
-export const updateProduct = (id, product) => api.put(`/Products/${id}`, product);
-export const deleteProduct = (id) => api.delete(`/Products/${id}`);
-
-export const getTransactions = () => api.get('/Transactions');
-export const getTransaction = (id) => api.get(`/Transactions/${id}`);
-export const createTransaction = (transaction) => api.post('/Transactions', transaction);
-export const updateTransaction = (id, transaction) => api.put(`/Transactions/${id}`, transaction);
-export const deleteTransaction = (id) => api.delete(`/Transactions/${id}`);

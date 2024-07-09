@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
-function TransactionList() {
+const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/transactions'); // Ustaw odpowiedni URL do swojego backendu
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setTransactions(data);
+            } catch (error) {
+                console.error('Fetch Error:', error);
+            }
+        };
+
         fetchTransactions();
     }, []);
 
-    const fetchTransactions = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/api/transactions');
-            setTransactions(response.data);
-        } catch (error) {
-            console.error('Error fetching transactions:', error);
-        }
-    };
-
     return (
         <div>
-            <h3>Lista Transakcji</h3>
+            <h2>Lista transakcji</h2>
             <ul>
-                {transactions.map(transaction => (
+                {transactions.map((transaction) => (
                     <li key={transaction.id}>
-                        ID: {transaction.id}, Produkt ID: {transaction.productId},
-                        Ilość: {transaction.quantity}, Cena: {transaction.price},
-                        Data: {new Date(transaction.date).toLocaleString()},
-                        Typ: {transaction.type}
+                        {transaction.productName} - {transaction.amount} x {transaction.unitPrice} PLN
                     </li>
                 ))}
             </ul>
         </div>
     );
-}
+};
 
 export default TransactionList;
