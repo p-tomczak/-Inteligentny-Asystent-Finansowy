@@ -1,25 +1,37 @@
-using Microsoft.EntityFrameworkCore;
-
-public class AppDbContext : DbContext
+public class ApplicationDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
     {
     }
 
     public DbSet<Product> Products { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Store> Stores { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<OrderItem>()
-            .HasKey(oi => new { oi.Id }); // Definicja klucza głównego dla OrderItem
-
-        modelBuilder.Entity<OrderItem>()
-            .HasOne(oi => oi.Product)
-            .WithMany()
-            .HasForeignKey(oi => oi.ProductId); // Relacja 1-do-wielu z Product
-
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Store)
+            .WithMany(s => s.Products)
+            .HasForeignKey(p => p.StoreId);
+
+        modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.Product)
+            .WithMany(p => p.Transactions)
+            .HasForeignKey(t => t.ProductId);
+        
+        modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.Store)
+            .WithMany(s => s.Transactions)
+            .HasForeignKey(t => t.StoreId);
+
+        modelBuilder.Entity<Store>()
+            .HasOne<User>()
+            .WithMany(u => u.Stores)
+            .HasForeignKey(s => s.UserId);
     }
 }

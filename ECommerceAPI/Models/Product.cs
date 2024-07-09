@@ -1,16 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-
 public class Product
 {
-    public int Id { get; set; }
-
-    [Required]
+    public int ProductId { get; set; }
     public string Name { get; set; }
-
     public string Description { get; set; }
-
-    [Required]
-    public decimal Price { get; set; }
-
-
+    public decimal PriceNet { get; set; }
+    public decimal PriceGross { get; set; }
+    public int StoreId { get; set; }
+    public Store Store { get; set; }
+    public ICollection<Transaction> Transactions { get; set; }
 }
