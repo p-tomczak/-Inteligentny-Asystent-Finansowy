@@ -1,35 +1,64 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { createProduct } from '../api';
 
-const ProductForm = () => {
+function ProductForm() {
     const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [priceNet, setPriceNet] = useState('');
+    const [priceGross, setPriceGross] = useState('');
+    const [storeId, setStoreId] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        axios.post('/api/products', {
-            name: name,
-            price: price
-        })
-            .then(response => {
-                console.log('Product added:', response.data);
-                setName('');
-                setPrice('');
-            })
-            .catch(error => {
-                console.error('Error adding product:', error);
-            });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await createProduct({ name, description, priceNet, priceGross, storeId });
+        setName('');
+        setDescription('');
+        setPriceNet('');
+        setPriceGross('');
+        setStoreId('');
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add Product</h2>
-            <label>Name: <input type="text" value={name} onChange={e => setName(e.target.value)} /></label><br />
-            <label>Price: <input type="number" value={price} onChange={e => setPrice(e.target.value)} /></label><br />
-            <button type="submit">Add Product</button>
+            <h3>Dodaj Produkt</h3>
+            <input
+                type="text"
+                placeholder="Nazwa"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+            />
+            <input
+                type="text"
+                placeholder="Opis"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+            />
+            <input
+                type="number"
+                placeholder="Cena Netto"
+                value={priceNet}
+                onChange={(e) => setPriceNet(e.target.value)}
+                required
+            />
+            <input
+                type="number"
+                placeholder="Cena Brutto"
+                value={priceGross}
+                onChange={(e) => setPriceGross(e.target.value)}
+                required
+            />
+            <input
+                type="number"
+                placeholder="ID Sklepu"
+                value={storeId}
+                onChange={(e) => setStoreId(e.target.value)}
+                required
+            />
+            <button type="submit">Dodaj</button>
         </form>
     );
-};
+}
 
 export default ProductForm;

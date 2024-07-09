@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { getProducts, deleteProduct } from '../api';
 
-const ProductList = () => {
+function ProductList() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/products')
-            .then(response => {
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
+        const fetchProducts = async () => {
+            const response = await getProducts();
+            setProducts(response.data);
+        };
+        fetchProducts();
     }, []);
+
+    const handleDelete = async (id) => {
+        await deleteProduct(id);
+        setProducts(products.filter(product => product.productId !== id));
+    };
 
     return (
         <div>
-            <h2>Product List</h2>
+            <h3>Lista Produktów</h3>
             <ul>
                 {products.map(product => (
-                    <li key={product.id}>
-                        <strong>{product.name}</strong> - {product.price} PLN
+                    <li key={product.productId}>
+                        {product.name} - {product.description} - Netto: {product.priceNet} - Brutto: {product.priceGross}
+                        <button onClick={() => handleDelete(product.productId)}>Usuń</button>
                     </li>
                 ))}
             </ul>
         </div>
     );
-};
+}
 
 export default ProductList;
