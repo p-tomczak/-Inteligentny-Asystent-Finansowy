@@ -13,7 +13,7 @@ const ProductForm = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/api/products', {
+            const response = await fetch('http://localhost:3000/api/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const ProductForm = () => {
                 throw new Error('Network response was not ok');
             }
 
-            // Zresetowanie formularza po dodaniu produktu
+
             setProductName('');
             setProductPrice('');
         } catch (error) {

@@ -6,7 +6,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/products'); // Ustaw odpowiedni URL do swojego backendu
+                const response = await fetch('http://localhost:3000/api/products'); // Ustaw odpowiedni URL do swojego backendu
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

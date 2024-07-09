@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from './api';
+import api from "/my-app/src/api.js";
 
 const TransactionForm = () => {
     const [productName, setProductName] = useState('');
@@ -17,7 +17,7 @@ const TransactionForm = () => {
 
         try {
             await api.createTransaction(transactionData);
-            // Wstaw tutaj logikę do obsługi sukcesu, np. wyzerowanie pól formularza
+
             setProductName('');
             setAmount('');
             setUnitPrice('');

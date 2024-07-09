@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from './api';
+import api from "/my-app/src/api.js";
 
 const UserForm = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +15,7 @@ const UserForm = () => {
 
         try {
             await api.createUser(userData);
-            // Wstaw tutaj logikę do obsługi sukcesu, np. wyzerowanie pól formularza
+
             setUsername('');
             setEmail('');
         } catch (error) {

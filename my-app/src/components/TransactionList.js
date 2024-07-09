@@ -6,12 +6,13 @@ const TransactionList = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/transactions'); // Ustaw odpowiedni URL do swojego backendu
+                const response = await fetch('http://localhost:3000/api/transactions');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
+                } else {
+                    const data = await response.json();
+                    setTransactions(data);
                 }
-                const data = await response.json();
-                setTransactions(data);
             } catch (error) {
                 console.error('Fetch Error:', error);
             }

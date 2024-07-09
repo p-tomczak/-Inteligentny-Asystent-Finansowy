@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000/api'; // Ustaw odpowiedni URL do swojego backendu
+const BASE_URL = 'http://localhost:3000/api';
 
 const api = {
     fetchProducts: async () => {
