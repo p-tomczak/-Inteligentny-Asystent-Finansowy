@@ -1,0 +1,5 @@
+INSERT INTO Stores (Name) VALUES ('Store 1');
+INSERT INTO Stores (Name) VALUES ('Store 2');
+
+INSERT INTO Users (Username, Password, StoreId) VALUES ('user1', 'password1', 1);
+INSERT INTO Users (Username, Password, StoreId) VALUES ('user2', 'password2', 2);

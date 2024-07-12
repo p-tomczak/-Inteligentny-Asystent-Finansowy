@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from "/my-app/src/api.js";
+import api from './api';
 
 const UserForm = () => {
     const [username, setUsername] = useState('');
