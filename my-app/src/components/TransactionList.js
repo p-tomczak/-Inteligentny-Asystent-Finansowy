@@ -1,31 +1,36 @@
-// TransactionList.js
-
 import React, { useState, useEffect } from 'react';
-import api from '../api';
+import { fetchTransactions } from '../api';
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchTransactionsData = async () => {
+            setLoading(true);
             try {
-                const data = await api.fetchTransactions();
-                setTransactions(data);
+                const transactionsData = await fetchTransactions();
+                setTransactions(transactionsData);
             } catch (error) {
                 console.error('Error fetching transactions:', error);
+            } finally {
+                setLoading(false);
             }
         };
+
         fetchTransactionsData();
     }, []);
 
+    if (loading) {
+        return <p>Loading transactions...</p>;
+    }
+
     return (
         <div>
-            <h2>Lista Transakcji</h2>
+            <h3>Lista transakcji</h3>
             <ul>
-                {transactions.map(transaction => (
-                    <li key={transaction.id}>
-                        Amount: {transaction.amount}, Description: {transaction.description}
-                    </li>
+                {transactions && transactions.map(transaction => (
+                    <li key={transaction.id}>{transaction.description}</li>
                 ))}
             </ul>
         </div>

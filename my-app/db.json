@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Product A",
+      "priceNet": 100,
+      "priceGross": 123
+    },
+    {
+      "id": 2,
+      "name": "Product B",
+      "priceNet": 150,
+      "priceGross": 180
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "type": "Zakup",
+      "productId": 1,
+      "quantity": 2,
+      "totalAmount": 246,
+      "date": "2024-07-15"
+    },
+    {
+      "id": 2,
+      "type": "Zwrot",
+      "productId": 2,
+      "quantity": 1,
+      "totalAmount": 180,
+      "date": "2024-07-16"
+    }
+  ]
+}
