@@ -1,10 +1,16 @@
+using System;
+
 namespace ECommerceAPI.Models
 {
     public class Transaction
     {
-        public int Id { get; set; }
-        public int OrderId { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public int TransactionId { get; set; }
+        public string Store { get; set; }
+        public Product Product { get; set; }
+
+        public Transaction()
+        {
+            Product = new Product();
+        }
     }
 }

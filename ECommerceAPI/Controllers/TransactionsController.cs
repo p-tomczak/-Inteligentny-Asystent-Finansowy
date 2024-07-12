@@ -1,10 +1,21 @@
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ECommerceAPI.Models;
+using ECommerceAPI.Data;
+
+
 [Route("api/[controller]")]
 [ApiController]
+
 public class TransactionsController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly AppDbContext _context;
 
-    public TransactionsController(ApplicationDbContext context)
+    public TransactionsController(AppDbContext context)
     {
         _context = context;
     }

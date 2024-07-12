@@ -15,12 +15,12 @@ namespace ECommerceAPI.Services
 
         public async Task<IEnumerable<Order>> GetOrdersAsync()
         {
-            return await _context.Orders.Include(o => o.Products).ToListAsync();
+            return await _context.Orders.Include(o => o.OrderItems).ToListAsync();
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            return await _context.Orders.Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task<Order> CreateOrderAsync(Order order)

@@ -20,7 +20,7 @@ const TransactionList = () => {
 
     return (
         <div>
-            <h2>Transakcje</h2>
+            <h2>Lista Transakcji</h2>
             <ul>
                 {transactions.map(transaction => (
                     <li key={transaction.id}>

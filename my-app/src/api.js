@@ -1,4 +1,4 @@
-const BASE_URL = 'http://api.example.com';
+const BASE_URL = "http://localhost:3000";
 
 const fetchProducts = async () => {
     try {

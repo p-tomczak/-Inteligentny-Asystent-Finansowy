@@ -1,4 +1,3 @@
-// ProductList.js
 
 import React, { useState, useEffect } from 'react';
 import api from '../api';
@@ -20,7 +19,7 @@ const ProductList = () => {
 
     return (
         <div>
-            <h2>Produkty</h2>
+            <h2>Lista Produktów</h2>
             <ul>
                 {products.map(product => (
                     <li key={product.id}>{product.name} - {product.price}</li>
