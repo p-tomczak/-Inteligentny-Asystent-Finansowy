@@ -1,35 +1,59 @@
 import React, { useState } from 'react';
-import { createTransaction } from '../api';
+import api from '../api';
 
 const TransactionForm = () => {
-    const [productId, setProductId] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [price, setPrice] = useState('');
-    const [type, setType] = useState('');
+    const [formData, setFormData] = useState({
+        amount: '',
+        description: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createTransaction({ productId, quantity, price, type });
-
+            await api.createTransaction(formData);
+            alert('Transaction created successfully!');
+            setFormData({ amount: '', description: '' });
         } catch (error) {
             console.error('Error creating transaction:', error);
-
+            alert('Failed to create transaction. Please try again.');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={productId} onChange={(e) => setProductId(e.target.value)} placeholder="Product ID" required />
-            <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} placeholder="Quantity" required />
-            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price" required />
-            <select value={type} onChange={(e) => setType(e.target.value)} required>
-                <option value="">Select Type</option>
-                <option value="purchase">Purchase</option>
-                <option value="return">Return</option>
-            </select>
-            <button type="submit">Submit</button>
-        </form>
+        <div>
+            <h2>Dodaj transakcję</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Kwota:</label>
+                    <input
+                        type="number"
+                        name="amount"
+                        value={formData.amount}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Opis:</label>
+                    <input
+                        type="text"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <button type="submit">Dodaj transakcję</button>
+            </form>
+        </div>
     );
 };
 

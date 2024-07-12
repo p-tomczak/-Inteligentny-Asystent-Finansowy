@@ -1,0 +1,7 @@
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.csproj.AssemblyReference.cache
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.AssemblyInfoInputs.cache
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.AssemblyInfo.cs
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.csproj.CoreCompileInputs.cache
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.MvcApplicationPartsAssemblyInfo.cs
+/Users/patryk/WebstormProjects/-Inteligentny-Asystent-Finansowy/ECommerceAPI/obj/Debug/net6.0/ECommerceAPI.MvcApplicationPartsAssemblyInfo.cache

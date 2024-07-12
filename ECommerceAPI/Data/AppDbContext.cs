@@ -1,37 +1,23 @@
-public class ApplicationDbContext : DbContext
+using Microsoft.EntityFrameworkCore;
+using ECommerceAPI.Models;
+
+namespace ECommerceAPI.Data
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+    public class AppDbContext : DbContext
     {
-    }
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+        }
 
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Store> Stores { get; set; }
-    public DbSet<Transaction> Transactions { get; set; }
-    public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        
-        modelBuilder.Entity<Product>()
-            .HasOne(p => p.Store)
-            .WithMany(s => s.Products)
-            .HasForeignKey(p => p.StoreId);
-
-        modelBuilder.Entity<Transaction>()
-            .HasOne(t => t.Product)
-            .WithMany(p => p.Transactions)
-            .HasForeignKey(t => t.ProductId);
-        
-        modelBuilder.Entity<Transaction>()
-            .HasOne(t => t.Store)
-            .WithMany(s => s.Transactions)
-            .HasForeignKey(t => t.StoreId);
-
-        modelBuilder.Entity<Store>()
-            .HasOne<User>()
-            .WithMany(u => u.Stores)
-            .HasForeignKey(s => s.UserId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+          
+        }
     }
 }
