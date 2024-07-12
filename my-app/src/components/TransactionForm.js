@@ -1,58 +1,47 @@
 import React, { useState } from 'react';
-import api from '../api';
+import { fetchProducts, fetchTransactions } from '../api';
 
 const TransactionForm = () => {
-    const [formData, setFormData] = useState({
-        amount: '',
-        description: ''
-    });
+    const [products, setProducts] = useState([]);
+    const [transactions, setTransactions] = useState([]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+    const handleFetchProducts = async () => {
+        try {
+            const productsData = await fetchProducts();
+            setProducts(productsData);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleFetchTransactions = async () => {
         try {
-            await api.createTransaction(formData);
-            alert('Transaction created successfully!');
-            setFormData({ amount: '', description: '' });
+            const transactionsData = await fetchTransactions();
+            setTransactions(transactionsData);
         } catch (error) {
-            console.error('Error creating transaction:', error);
-            alert('Failed to create transaction. Please try again.');
+            console.error('Error fetching transactions:', error);
         }
     };
 
     return (
         <div>
-            <h2>Dodaj transakcję</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Kwota:</label>
-                    <input
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Opis:</label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Dodaj transakcję</button>
-            </form>
+            <h3>Transaction Form</h3>
+            <button onClick={handleFetchProducts}>Fetch Products</button>
+            <button onClick={handleFetchTransactions}>Fetch Transactions</button>
+
+            <h4>Products:</h4>
+            <ul>
+                {products.map(product => (
+                    <li key={product.id}>{product.name}</li>
+                ))}
+            </ul>
+
+            <h4>Transactions:</h4>
+            <ul>
+                {transactions.map(transaction => (
+                    <li key={transaction.id}>{transaction.description}</li>
+                ))}
+            </ul>
         </div>
     );
 };

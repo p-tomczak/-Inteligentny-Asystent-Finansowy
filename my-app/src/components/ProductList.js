@@ -1,6 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
-import api from '../api';
+import React, { useEffect, useState } from 'react';
+import { fetchProducts, fetchTransactions } from '../api';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -8,23 +7,19 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProductsData = async () => {
             try {
-                const data = await api.fetchProducts();
-                setProducts(data);
+                const productsData = await fetchProducts();
+                setProducts(productsData);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
+
         fetchProductsData();
     }, []);
 
     return (
         <div>
-            <h2>Lista Produktów</h2>
-            <ul>
-                {products.map(product => (
-                    <li key={product.id}>{product.name} - {product.price}</li>
-                ))}
-            </ul>
+            {}
         </div>
     );
 };

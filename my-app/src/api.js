@@ -1,8 +1,8 @@
 const BASE_URL = "http://localhost:3000";
 
-const fetchProducts = async () => {
+export const fetchProducts = async () => {
     try {
-        const response = await fetch(`${BASE_URL}/products`);
+        const response = await fetch(`${BASE_URL}/orderitem`);
         if (!response.ok) {
             throw new Error('Failed to fetch products');
         }
@@ -13,7 +13,7 @@ const fetchProducts = async () => {
     }
 };
 
-const fetchTransactions = async () => {
+export const fetchTransactions = async () => {
     try {
         const response = await fetch(`${BASE_URL}/transactions`);
         if (!response.ok) {
@@ -24,9 +24,4 @@ const fetchTransactions = async () => {
         console.error('Error fetching transactions:', error);
         throw error;
     }
-};
-
-export default {
-    fetchProducts,
-    fetchTransactions
 };
