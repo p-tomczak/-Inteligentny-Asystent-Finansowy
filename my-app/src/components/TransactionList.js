@@ -1,37 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchTransactions } from '../api';
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
-        const fetchTransactions = async () => {
+        const loadTransactions = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/transactions');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                } else {
-                    const data = await response.json();
-                    setTransactions(data);
-                }
+                const data = await fetchTransactions();
+                setTransactions(data);
             } catch (error) {
-                console.error('Fetch Error:', error);
+                console.error('Error fetching transactions:', error);
             }
         };
 
-        fetchTransactions();
+        loadTransactions();
     }, []);
 
     return (
-        <div>
-            <h2>Lista transakcji</h2>
-            <ul>
-                {transactions.map((transaction) => (
-                    <li key={transaction.id}>
-                        {transaction.productName} - {transaction.amount} x {transaction.unitPrice} PLN
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <ul>
+            {transactions.map((transaction) => (
+                <li key={transaction.id}>
+                    {transaction.productId} - {transaction.quantity} @ {transaction.price} - {transaction.type}
+                </li>
+            ))}
+        </ul>
     );
 };
 

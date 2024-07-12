@@ -1,36 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchProducts } from '../api';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const loadProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/products'); // Ustaw odpowiedni URL do swojego backendu
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
+                const data = await fetchProducts();
                 setProducts(data);
             } catch (error) {
-                console.error('Fetch Error:', error);
+                console.error('Error fetching products:', error);
             }
         };
 
-        fetchProducts();
+        loadProducts();
     }, []);
 
     return (
-        <div>
-            <h2>Lista produktów</h2>
-            <ul>
-                {products.map((product) => (
-                    <li key={product.id}>
-                        {product.name} - {product.price} PLN
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <ul>
+            {products.map((product) => (
+                <li key={product.id}>
+                    {product.name} - {product.price} (Net: {product.netPrice}, Gross: {product.grossPrice})
+                </li>
+            ))}
+        </ul>
     );
 };
 

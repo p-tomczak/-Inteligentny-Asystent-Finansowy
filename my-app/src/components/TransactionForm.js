@@ -1,62 +1,34 @@
 import React, { useState } from 'react';
-import api from './api';
+import { createTransaction } from '../api';
 
 const TransactionForm = () => {
-    const [productName, setProductName] = useState('');
-    const [amount, setAmount] = useState('');
-    const [unitPrice, setUnitPrice] = useState('');
+    const [productId, setProductId] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [price, setPrice] = useState('');
+    const [type, setType] = useState('');
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const transactionData = {
-            productName,
-            amount: parseInt(amount),
-            unitPrice: parseFloat(unitPrice),
-        };
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            await api.createTransaction(transactionData);
+            await createTransaction({ productId, quantity, price, type });
 
-            setProductName('');
-            setAmount('');
-            setUnitPrice('');
         } catch (error) {
-            console.error('Transaction creation error:', error);
+            console.error('Error creating transaction:', error);
+
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Dodaj transakcję</h2>
-            <div>
-                <label>Nazwa produktu:</label>
-                <input
-                    type="text"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Ilość:</label>
-                <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Cena jednostkowa:</label>
-                <input
-                    type="number"
-                    value={unitPrice}
-                    onChange={(e) => setUnitPrice(e.target.value)}
-                    required
-                />
-            </div>
-            <button type="submit">Dodaj transakcję</button>
+            <input type="text" value={productId} onChange={(e) => setProductId(e.target.value)} placeholder="Product ID" required />
+            <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} placeholder="Quantity" required />
+            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price" required />
+            <select value={type} onChange={(e) => setType(e.target.value)} required>
+                <option value="">Select Type</option>
+                <option value="purchase">Purchase</option>
+                <option value="return">Return</option>
+            </select>
+            <button type="submit">Submit</button>
         </form>
     );
 };
