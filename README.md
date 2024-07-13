@@ -1,6 +1,7 @@
 # -Inteligentny-Asystent-Finansowy
 
 Tytuł: Inteligentny Asystent Finansowy dla Sklepów Online
+
 Opis projektu:
 Projekt ma na celu stworzenie platformy, która integruje sklep internetowy z zaawansowanymi 
 funkcjami finansowymi, wspierając zarówno klientów, jak i sprzedawców. 
