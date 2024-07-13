@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 
-const entryPath = "my-app/src";
+const entryPath = "-Inteligentny-Asystent-Finansowy";
 
 module.exports = {
     mode: "none",
